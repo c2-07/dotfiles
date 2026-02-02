@@ -32,33 +32,11 @@ return {
 				border = "rounded",
 			})
 
-			-- Minimal diagnostics
-			-- vim.diagnostic.config({
-			-- 	virtual_text = {
-			-- 		prefix = "●", -- minimal dot
-			-- 		spacing = 2,
-			-- 		source = false,
-			-- 	},
-			-- 	signs = {
-			-- 		text = {
-			-- 			[vim.diagnostic.severity.ERROR] = "✘",
-			-- 			[vim.diagnostic.severity.WARN] = "▲",
-			-- 			[vim.diagnostic.severity.INFO] = "",
-			-- 			[vim.diagnostic.severity.HINT] = "●",
-			-- 		},
-			-- 	},
-			-- 	underline = true,
-			-- 	update_in_insert = false,
-			-- 	severity_sort = true,
-			-- 	float = {
-			-- 		border = "rounded",
-			-- 		source = "if_many",
-			-- 	},
-			-- })
-
 			-- Servers
-			vim.lsp.config.tsserver = { on_attach = on_attach, capabilities = capabilities }
-			vim.lsp.config.eslint = { on_attach = on_attach, capabilities = capabilities }
+			-- TypeScript/JavaScript (using ts_ls)
+			vim.lsp.config.ts_ls = { on_attach = on_attach, capabilities = capabilities }
+			-- vim.lsp.config.eslint = { on_attach = on_attach, capabilities = capabilities }
+
 			vim.lsp.config.lua_ls = {
 				on_attach = on_attach,
 				capabilities = capabilities,
@@ -67,15 +45,20 @@ return {
 				},
 			}
 			vim.lsp.config.clangd = { on_attach = on_attach, capabilities = capabilities }
-			vim.lsp.config.pyright = { capabilities = capabilities }
 
-			vim.lsp.enable({
-				"tsserver",
-				"eslint",
-				"lua_ls",
-				"clangd",
-				"pyright",
-			})
+		-- Python: Ruff handles all linting and formatting
+		vim.lsp.config.ruff = {
+			on_attach = on_attach,
+			capabilities = capabilities,
+		}
+
+		vim.lsp.enable({
+			"ruff",      -- Python linting & formatting
+			"ts_ls",     -- TypeScript/JavaScript
+			"lua_ls",    -- Lua
+			"clangd",    -- C/C++
+			"ty",        -- Rust (improved type checking)
+		})
 		end,
 	},
 }
