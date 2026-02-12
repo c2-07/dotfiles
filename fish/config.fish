@@ -43,10 +43,17 @@ if type -q bat
 end
 
 # greeting
-set fish_greeting
 function fish_greeting
-    if test -x ~/.local/bin/nanofetch
-        ~/.local/bin/nanofetch
+    # interactive shells only
+    status --is-interactive; or return
+
+    # run once per login session
+    if not set -q __NANOFETCH_RAN
+        set -g __NANOFETCH_RAN 1
+
+        if test -x ~/.local/bin/nanofetch
+            ~/.local/bin/nanofetch
+        end
     end
 end
 
@@ -157,6 +164,57 @@ function copy
         command cp -r (string trim -r -c '/') $argv[1] $argv[2]
     else
         command cp $argv
+    end
+end
+
+function r --description "Compile and run source files"
+    if test (count $argv) -ne 1
+        echo "usage: r <source-file>"
+        return 1
+    end
+
+    set file $argv[1]
+
+    if not test -f $file
+        echo "File not found: $file"
+        return 1
+    end
+
+    set ext (string split -r -m1 . $file)[2]
+    set name (string split -r -m1 . $file)[1]
+
+    switch $ext
+        case c
+            clang $file -O2 -Wall -o $name && ./$name
+            rm -f $name
+
+        case cpp cc cxx
+            clang++ $file -O2 -Wall -std=c++20 -o $name && ./$name
+            rm -f $name
+
+        case rs
+            rustc $file -O && ./$name
+            rm -f $name
+
+        case go
+            go run $file
+
+        case java
+            javac $file && java $name
+            rm -f $name.class
+
+        case zig
+            zig run $file
+
+        case asm s
+            nasm -f elf64 $file -o $name.o \
+            && ld $name.o -o $name \
+            && ./$name
+            rm -f $name.o $name
+
+        case '*'
+            echo "Unsupported language: .$ext"
+            return 1
     end
 end
 

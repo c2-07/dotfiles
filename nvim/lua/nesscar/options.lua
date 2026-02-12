@@ -12,6 +12,7 @@ vim.g.netrw_liststyle = 4
 vim.g.netrw_winsize = 20
 vim.g.netrw_keepdir = 0
 ---
+-- opt.numberwidth=3
 opt.title = true
 opt.autoread = true
 opt.swapfile = false
@@ -31,7 +32,6 @@ opt.fillchars = {
 }
 opt.softtabstop = 4
 opt.autoindent = true
-opt.listchars = "tab:▸  ,trail:·,space:·,nbsp:␣"
 opt.foldlevel = 99
 opt.foldmethod = "indent"
 opt.foldtext = ""

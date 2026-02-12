@@ -1,0 +1,97 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+trim_trailing_whitespace = true
+
+# C/C++ and similar languages: 2-space indent
+[*.{c,cpp,cc,cxx,h,hpp,hxx,hh,C,H}]
+indent_style = space
+indent_size = 2
+
+# JavaScript/TypeScript: 2-space indent
+[*.{js,jsx,ts,tsx,mjs,cjs}]
+indent_style = space
+indent_size = 2
+
+# Web languages: 2-space indent
+[*.{html,css,scss,sass,less,json,jsonc,yaml,yml,xml}]
+indent_style = space
+indent_size = 2
+
+# Python: 4-space indent
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 88
+
+# Rust: 4-space indent
+[*.rs]
+indent_style = space
+indent_size = 4
+
+# Go: tabs (standard Go convention)
+[*.go]
+indent_style = tab
+indent_size = 4
+
+# Java: 4-space indent
+[*.java]
+indent_style = space
+indent_size = 4
+
+# C#: 4-space indent
+[*.cs]
+indent_style = space
+indent_size = 4
+
+# PHP: 4-space indent
+[*.php]
+indent_style = space
+indent_size = 4
+
+# Shell scripts: 2-space indent
+[*.{sh,bash,zsh}]
+indent_style = space
+indent_size = 2
+
+# Lua: 2-space indent
+[*.lua]
+indent_style = space
+indent_size = 2
+
+# Ruby: 2-space indent
+[*.rb]
+indent_style = space
+indent_size = 2
+
+# SQL: 2-space indent
+[*.sql]
+indent_style = space
+indent_size = 2
+
+# Markdown: 2-space indent (but often doesn't matter)
+[*.{md,markdown}]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+
+# Makefile: must use tabs
+[Makefile]
+indent_style = tab
+
+# Docker: 2-space indent
+[Dockerfile]
+indent_style = space
+indent_size = 2
+
+# YAML (often strict): 2-space indent
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2

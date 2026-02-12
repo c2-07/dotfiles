@@ -17,7 +17,7 @@
     dust
     eza
     fd
-	stow
+    stow
     fzf
     gh
     ripgrep
@@ -40,6 +40,7 @@
 
     # ai
     opencode
+    gemini-cli
 
     # lang
     rustup

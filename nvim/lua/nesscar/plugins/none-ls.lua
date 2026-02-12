@@ -11,16 +11,17 @@ return {
 				builtins.formatting.stylua,
 
 				-- Web
-				builtins.formatting.prettierd.with({
-					filetypes = {
-						"html",
-						"css",
-						"scss",
-						"javascript",
-						"typescript",
-						"json",
-					},
-				}),
+				-- builtins.formatting.prettierd.with({
+				-- 	filetypes = {
+				-- 		"html",
+				-- 		"css",
+				-- 		"scss",
+				-- 		"javascript",
+				-- 		"typescript",
+				-- 		"json",
+				-- 	},
+				-- }),
+				-- Python formatting handled by Ruff LSP
 			},
 		}
 	end,
