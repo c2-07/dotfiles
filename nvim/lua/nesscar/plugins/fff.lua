@@ -1,6 +1,6 @@
 return {
 	"dmtrKovalenko/fff.nvim",
-	build = 'export OPENSSL_DIR=$(/opt/homebrew/bin/brew --prefix openssl@3) && export OPENSSL_LIB_DIR=$OPENSSL_DIR/lib && export OPENSSL_INCLUDE_DIR=$OPENSSL_DIR/include && export LIBRARY_PATH=$OPENSSL_LIB_DIR && export INCLUDE_PATH=$OPENSSL_INCLUDE_DIR && export CFLAGS="-Wno-error=unused-but-set-variable -Wno-error=unused-variable -Wno-error=unknown-warning-option" && rustup run nightly-2025-01-01 cargo build --release --lib && cp "$(rustup run nightly-2025-01-01 cargo metadata --format-version 1 | grep -o \'"target_directory":"[^"]*"\' | head -1 | cut -d\'"\' -f4)/release/libfff_nvim.dylib" lua/fff.so',
+	build = function() require("fff.download").download_or_build_binary() end,
 	config = function()
 		local fff = require("fff")
 

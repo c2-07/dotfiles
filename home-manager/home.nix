@@ -38,10 +38,6 @@
     # alejandra
     # nil
 
-    # ai
-    opencode
-    gemini-cli
-
     # lang
     rustup
     uv
