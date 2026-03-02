@@ -180,37 +180,65 @@ function r --description "Compile and run source files"
         return 1
     end
 
-    set ext (string split -r -m1 . $file)[2]
-    set name (string split -r -m1 . $file)[1]
+    set parts (string split -r -m1 . $file)
+    if test (count $parts) -ne 2
+        echo "Invalid filename"
+        return 1
+    end
+
+    set name $parts[1]
+    set ext  $parts[2]
 
     switch $ext
         case c
-            clang $file -O2 -Wall -o $name && ./$name
+            clang $file -std=c11 -Wall -Wextra -g -O2 -o $name
+            or return 1
+            ./$name
+            set status_code $status
             rm -f $name
+            return $status_code
 
         case cpp cc cxx
-            clang++ $file -O2 -Wall -std=c++20 -o $name && ./$name
+            clang++ $file -std=c++20 -Wall -Wextra -Wpedantic -g -O2 -o $name
+            or return 1
+            ./$name
+            set status_code $status
             rm -f $name
+            return $status_code
 
         case rs
-            rustc $file -O && ./$name
+            rustc $file -C opt-level=2
+            or return 1
+            ./$name
+            set status_code $status
             rm -f $name
+            return $status_code
 
         case go
             go run $file
+            return $status
 
         case java
-            javac $file && java $name
+            javac $file
+            or return 1
+            java $name
+            set status_code $status
             rm -f $name.class
+            return $status_code
 
         case zig
             zig run $file
+            return $status
 
         case asm s
-            nasm -f elf64 $file -o $name.o \
-            && ld $name.o -o $name \
-            && ./$name
+            nasm -f elf64 $file -o $name.o
+            or return 1
+            ld $name.o -o $name
+            or return 1
+            ./$name
+            set status_code $status
             rm -f $name.o $name
+            return $status_code
 
         case '*'
             echo "Unsupported language: .$ext"

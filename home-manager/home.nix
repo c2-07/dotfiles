@@ -25,6 +25,7 @@
     glow # Markdown Reader
     inetutils # telnet etc by GNU.
     tealdeer # tldr (rust)
+    gdb
 
     # dev
     fish

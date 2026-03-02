@@ -5,6 +5,19 @@ return {
 	opts = {
 		cmdline = { enabled = true },
 
+		snippets = {
+			expand = function(snippet)
+				local ok, err = pcall(vim.snippet.expand, snippet)
+				if not ok then
+					-- If snippet parsing fails, insert the text as-is
+					local cursor = vim.api.nvim_win_get_cursor(0)
+					local row, col = cursor[1] - 1, cursor[2]
+					vim.api.nvim_buf_set_text(0, row, col, row, col, { snippet })
+					vim.api.nvim_win_set_cursor(0, { row + 1, col + #snippet })
+				end
+			end,
+		},
+
 		keymap = {
 			preset = "enter",
 			-- next / previous item
