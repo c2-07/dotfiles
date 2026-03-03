@@ -97,3 +97,8 @@ vim.keymap.set("n", "<Esc>", function()
 	-- no floats → clear search highlight
 	vim.cmd("noh")
 end, { silent = true })
+
+-- Do not copy to clipboard on x
+map("n", "x", '"_x', opts)
+map("v", "x", '"_x', opts)
+
