@@ -18,6 +18,7 @@ opt.autoread = true
 opt.swapfile = false
 opt.autowrite = true
 opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
+opt.cmdheight = 0 -- Hide command line when inactive
 opt.completeopt = "menu,menuone,noselect"
 opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
 opt.cursorline = true -- Enable highlighting of the current line

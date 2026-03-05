@@ -14,7 +14,7 @@ map("n", "<C-k>", vim.lsp.buf.signature_help)
 map("n", "bn", ":bnext<CR>", { desc = "Next buffer" })
 map("n", "bp", ":bprevious<CR>", { desc = "Prev buffer" })
 map("n", "bd", function()
-	vim.cmd("bdelete")
+  vim.cmd("bdelete")
 end)
 
 -- Ctrl + V to Paste
@@ -22,17 +22,17 @@ map("n", "<C-v>", '"+p', { noremap = true, silent = true })
 map("i", "<C-v>", "<C-r>+", { noremap = true, silent = true })
 
 if vim.g.neovide then
-	vim.keymap.set({ "n", "v" }, "<C-=>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
-	vim.keymap.set({ "n", "v" }, "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
-	vim.keymap.set({ "n", "v" }, "<C-0>", ":lua vim.g.neovide_scale_factor = 1<CR>")
+  vim.keymap.set({ "n", "v" }, "<C-=>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
+  vim.keymap.set({ "n", "v" }, "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
+  vim.keymap.set({ "n", "v" }, "<C-0>", ":lua vim.g.neovide_scale_factor = 1<CR>")
 end
 
 -- Diagnostics
 map("n", "<leader>d", function()
-	vim.diagnostic.open_float(nil, {
-		focus = false,
-		close_events = { "CursorMoved", "BufHidden", "InsertEnter" },
-	})
+  vim.diagnostic.open_float(nil, {
+    focus = false,
+    close_events = { "CursorMoved", "BufHidden", "InsertEnter" },
+  })
 end)
 map("n", "[d", vim.diagnostic.goto_prev)
 map("n", "]d", vim.diagnostic.goto_next)
@@ -76,29 +76,28 @@ map("n", "<leader>gd", ":Gitsigns preview_hunk_inline<CR>")
 
 -- conform powered formatting
 map("n", "<C-f>", function()
-	require("conform").format({ async = true, lsp_fallback = false })
+  require("conform").format({ async = true, lsp_fallback = false })
 end, { desc = "Format file (conform)" })
 
 vim.api.nvim_create_user_command("Format", function()
-	vim.lsp.buf.format({ async = true })
+  vim.lsp.buf.format({ async = true })
 end, {})
 
 -- Close any floating window
 vim.keymap.set("n", "<Esc>", function()
-	-- close any floating window first
-	for _, win in ipairs(vim.api.nvim_list_wins()) do
-		local cfg = vim.api.nvim_win_get_config(win)
-		if cfg.relative ~= "" then
-			vim.api.nvim_win_close(win, false)
-			return
-		end
-	end
+  -- close any floating window first
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local cfg = vim.api.nvim_win_get_config(win)
+    if cfg.relative ~= "" then
+      vim.api.nvim_win_close(win, false)
+      return
+    end
+  end
 
-	-- no floats → clear search highlight
-	vim.cmd("noh")
+  -- no floats → clear search highlight
+  vim.cmd("noh")
 end, { silent = true })
 
 -- Do not copy to clipboard on x
-map("n", "x", '"_x', opts)
-map("v", "x", '"_x', opts)
-
+map("n", "d", '"_d', opts)
+map("v", "d", '"_d', opts)

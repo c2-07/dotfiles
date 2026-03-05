@@ -53,10 +53,11 @@ return {
 				local overrides = {
 					-- Main Background (Toggled)
 					Normal = { bg = main_bg },
-					CursorLine = { bg = "#222222" }, -- Slightly lighter to be visible against black
-					CursorLineNr = { bg = "none", bold = true },
+					-- CursorLine (Handled conditionally below)
+					-- CursorLine = { bg = "#222222" }, -- Slightly lighter to be visible against black
+					CursorLineNr = { bg = "none", fg = "#909090", bold = true },
 					NonText = { bg = main_bg },
-					LineNr = { bg = main_bg },
+					LineNr = { bg = main_bg, fg = "#505050" },
 					Folded = { bg = main_bg },
 					SignColumn = { bg = main_bg },
 					EndOfBuffer = { bg = main_bg },
@@ -68,7 +69,7 @@ return {
 
 					-- Popup Menus
 					Pmenu = { bg = black },
-					PmenuSel = { bg = dark_gray, fg = white, bold = true },
+					PmenuSel = { link = "CursorLine" },
 					PmenuSbar = { bg = black },
 					PmenuThumb = { bg = border_gray },
 
@@ -86,7 +87,7 @@ return {
 					-- Blink / CMP
 					BlinkCmpMenu = { bg = black },
 					BlinkCmpMenuBorder = { fg = border_gray, bg = black },
-					BlinkCmpMenuSelection = { bg = dark_gray, fg = white, bold = true },
+					BlinkCmpMenuSelection = { link = "CursorLine" },
 					BlinkCmpDoc = { bg = black },
 					BlinkCmpDocBorder = { fg = border_gray, bg = black },
 
@@ -106,7 +107,36 @@ return {
 					IlluminatedWordText = { bg = "#353535" },
 					IlluminatedWordRead = { bg = "#353535" },
 					IlluminatedWordWrite = { bg = "#353535" },
+
+					-- Dropbar (Persistent Winbar) - Match CursorLine-ish style
+					-- We use a dedicated dark gray background to distinguish it from the code
+					DropBar = { bg = "#1e1e1e", fg = "#a0a0a0" },
+					DropBarIconKind = { bg = "#1e1e1e", fg = "#a0a0a0" },
+					DropBarIconUI = { bg = "#1e1e1e", fg = "#a0a0a0" },
+					DropBarText = { bg = "#1e1e1e", fg = "#a0a0a0" },
+					
+					-- Ensure standard WinBar groups match if DropBar falls back
+					WinBar = { bg = "#1e1e1e", fg = "#a0a0a0" },
+					WinBarNC = { bg = "#1e1e1e", fg = "#606060" },
+
+					-- Floating Menus (Dropbar Menus)
+					-- Solid background (no transparency) to prevent text-over-text issues
+					DropBarMenu = { bg = "#1e1e1e", fg = "#c0c0c0" }, 
+					DropBarMenuHover = { bg = "#303030", fg = white, bold = true },
+					DropBarMenuCurrentContext = { bg = "#303030", fg = white, bold = true },
 				}
+
+				-- Handle CursorLine conditionally based on user preference
+				-- Catppuccin uses the specific dark gray (#222222)
+				-- Other themes use their default CursorLine (to match theme), but we can adjust if needed
+				if vim.g.colors_name and string.find(vim.g.colors_name, "catppuccin") then
+					overrides.CursorLine = { bg = "#222222" }
+				else
+					-- For other themes, we use a subtle, theme-matching cursor line
+					-- By default, we let the theme set it.
+					-- If we wanted to force a specific style for all others, we'd do it here.
+					-- overrides.CursorLine = { bg = "#1a1a1a" } -- Example generic dark
+				end
 
 				for group, opts in pairs(overrides) do
 					-- Force create/override to ensure they exist
@@ -206,6 +236,25 @@ return {
 						vim.api.nvim_set_hl(0, group, new_hl)
 					end
 				end
+				-- 4. DYNAMIC CURSOR COLOR (Matches Theme Accent)
+				-- We try to find the "accent" color of the theme (often Function or Keyword)
+				local accent_group = "Function"
+				local accent_hl = vim.api.nvim_get_hl(0, { name = accent_group, link = false })
+				
+				-- If we can't find a color directly, try resolving links
+				if not accent_hl or not accent_hl.fg then
+					accent_hl = vim.api.nvim_get_hl(0, { name = accent_group, link = true })
+				end
+
+				if accent_hl and accent_hl.fg then
+					-- Set the cursor background to the theme's accent color
+					-- And text inside cursor to black for contrast
+					vim.api.nvim_set_hl(0, "Cursor", { bg = accent_hl.fg, fg = "#000000" })
+					vim.api.nvim_set_hl(0, "TermCursor", { bg = accent_hl.fg, fg = "#000000" })
+					
+					-- Ensure the terminal knows about this color change (for some terminals)
+					vim.opt.guicursor = "n-v-c-sm:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor"
+				end
 			end
 
 			-- Apply overrides whenever colorscheme changes
@@ -213,6 +262,7 @@ return {
 				pattern = "*",
 				callback = apply_black_fog,
 			})
+
 
 			-- 2. TRANSPARENCY TOGGLE COMMAND
 			vim.api.nvim_create_user_command("ToggleTransparency", function()
@@ -295,6 +345,23 @@ return {
 						{ name = "Spectrum",  type = "spectrum" },
 					}
 				},
+				zenbones = {
+					base = "zenbones",
+					variants = {
+						{ name = "Zenbones",       id = "zenbones" },
+						{ name = "Zenwritten",     id = "zenwritten" },
+						{ name = "Duckbones",      id = "duckbones" },
+						{ name = "Forestbones",    id = "forestbones" },
+						{ name = "Kanagawabones",  id = "kanagawabones" },
+						{ name = "Neobones",       id = "neobones" },
+						{ name = "Nordbones",      id = "nordbones" },
+						{ name = "Rosebones",      id = "rosebones" },
+						{ name = "Seoulbones",     id = "seoulbones" },
+						{ name = "Tokyobones",     id = "tokyobones" },
+						{ name = "Vimbones",       id = "vimbones" },
+						{ name = "Zenburned",      id = "zenburned" },
+					}
+				},
 			}
 
 			local function activate_theme(choice)
@@ -319,6 +386,8 @@ return {
 				elseif choice.type == "catppuccin" then
 					if choice.variant.id then vim.cmd.colorscheme(choice.variant.id) end
 				elseif choice.type == "tokyonight" then
+					if choice.variant.id then vim.cmd.colorscheme(choice.variant.id) end
+				elseif choice.type == "zenbones" then
 					if choice.variant.id then vim.cmd.colorscheme(choice.variant.id) end
 				end
 				
@@ -349,6 +418,8 @@ return {
 
 				-- A. Add variants for ALL supported themes (Unconditionally)
 				-- We assume these plugins are installed via this very file.
+				local handled_ids = {} -- Keep track of IDs we've already added
+				
 				for key, config in pairs(theme_variants) do
 					local variants = config.variants or config
 					for _, v in ipairs(variants) do
@@ -357,21 +428,34 @@ return {
 							type = key,
 							variant = v
 						})
+						
+						-- Store handled IDs to prevent duplicates in the generic list
+						if v.id then handled_ids[v.id] = true end
+						if config.base then handled_ids[config.base] = true end
 					end
 				end
 
 				-- B. Add other detected themes (that aren't in our variant list)
-				local ignored = { "blue", "darkblue", "default", "delek", "desert", "elflord", "evening", "industry", "koehler", "morning", "murphy", "pablo", "peachpuff", "ron", "shine", "slate", "torte", "quiet", "vim", "lunaperche", "habamax", "zaibatsu" }
+				local ignored = { "blue", "darkblue", "default", "delek", "desert", "elflord", "evening", "industry", "koehler", "morning", "murphy", "pablo", "peachpuff", "ron", "shine", "slate", "torte", "quiet", "vim", "lunaperche", "habamax", "zaibatsu", "retrobox", "sorbet", "wildcharm", "zellner", "unokai", "random" }
 				
 				for _, name in ipairs(installed_themes) do
 					local is_handled = false
-					for key, _ in pairs(theme_variants) do
-						if name:find(key) then is_handled = true break end
+					
+					-- Check against our explicit handled list first
+					if handled_ids[name] then
+						is_handled = true
+					else
+						-- Fallback: Check if theme name contains a key (e.g. "tokyonight-storm" contains "tokyonight")
+						for key, _ in pairs(theme_variants) do
+							if name:find(key) then is_handled = true break end
+						end
 					end
 					
 					local is_ignored = false
 					for _, ignore in ipairs(ignored) do
 						if name == ignore then is_ignored = true break end
+						-- Ignore random/utility themes often included in packs
+						if name:find("random") then is_ignored = true break end
 					end
 
 					if not is_handled and not is_ignored then
@@ -433,4 +517,5 @@ return {
 	{ "shaunsingh/nord.nvim", lazy = true, config = function() vim.g.nord_disable_background = true end },
 	{ "tanvirtin/monokai.nvim", lazy = true },
 	{ "ellisonleao/gruvbox.nvim", lazy = true, opts = { transparent_mode = true } },
+	{ "zenbones-theme/zenbones.nvim", lazy = true, dependencies = "rktjmp/lush.nvim" },
 }

@@ -9,12 +9,24 @@ return {
         component_separators = "|",
         section_separators = "",
       },
+      -- Disabled winbar to prevent layout shifting ("shaking")
+      -- winbar = {}, 
       sections = {
         lualine_a = {
           { "mode", padding = { left = 2, right = 2 } },
         },
         lualine_b = { "branch", "diff", "diagnostics" },
-        lualine_c = { "filename" },
+        lualine_c = {
+          {
+            "filename",
+            fmt = function(str)
+              if str:match("term://") or str:match("toggleterm") then
+                return "Terminal"
+              end
+              return str
+            end,
+          },
+        },
 				lualine_x = {
 					{ "filetype", colored = false, fmt = string.upper },
 				},

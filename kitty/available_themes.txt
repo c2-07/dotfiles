@@ -1,0 +1,13 @@
+catppuccin-frappe.conf
+catppuccin-latte.conf
+catppuccin-macchiato.conf
+catppuccin-mocha.conf
+dracula.conf
+everforest-dark-hard.conf
+gruvbox-dark.conf
+kanagawa.conf
+nord.conf
+tokyo-night-day.conf
+tokyo-night-moon.conf
+tokyo-night-storm.conf
+tokyo-night.conf

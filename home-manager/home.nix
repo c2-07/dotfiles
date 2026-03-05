@@ -33,7 +33,6 @@
     nodejs_24
     tmux
     hyperfine
-    bear
     silicon
 
     # alejandra

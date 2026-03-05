@@ -1,0 +1,115 @@
+# To use this file in global scope:
+#
+# git config --global core.excludesfile ~/.gitignore_global
+#
+# Verify:
+#
+# git config --global core.excludesfile
+#
+# -------------------------
+# OS junk
+# -------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+._*
+
+# -------------------------
+# Editors / IDEs
+# -------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+*.tmp
+*.bak
+
+# Neovim
+.nvimlog
+
+# -------------------------
+# Logs
+# -------------------------
+*.log
+logs/
+
+# -------------------------
+# Environment / secrets
+# -------------------------
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.mypy_cache/
+.pytest_cache/
+.coverage
+
+# -------------------------
+# Node / JS
+# -------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# -------------------------
+# Build outputs
+# -------------------------
+dist/
+build/
+target/
+out/
+release/
+debug/
+tmp/
+temp/
+
+# -------------------------
+# Rust
+# -------------------------
+target/
+
+# -------------------------
+# Go
+# -------------------------
+bin/
+
+# -------------------------
+# C / C++
+# -------------------------
+*.o
+*.so
+*.a
+*.out
+*.exe
+
+# -------------------------
+# macOS
+# -------------------------
+.AppleDouble
+.LSOverride
+
+# -------------------------
+# Linux
+# -------------------------
+*~
+.cache/
