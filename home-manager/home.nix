@@ -6,7 +6,7 @@
   home.username = "gourav";
   home.homeDirectory = "/Users/gourav";
 
-  home.stateVersion = "25.11";
+  home.stateVersion = "24.11";
   home.enableNixpkgsReleaseCheck = false;
 
   home.packages = with pkgs; [
@@ -25,12 +25,11 @@
     glow # Markdown Reader
     inetutils # telnet etc by GNU.
     tealdeer # tldr (rust)
-    gdb
 
     # dev
     fish
     neovim
-    nodejs_24
+    nodejs
     tmux
     hyperfine
     silicon

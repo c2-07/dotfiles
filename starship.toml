@@ -4,7 +4,7 @@ add_newline = true
 
 format = """$character"""
 
-right_format = """$directory$hostname $nix_shell$rust$golang$nodejs$c$cpp$git_branch$git_status"""
+right_format = """$directory$hostname $nix_shell$rust$golang$nodejs$c$git_branch$git_status"""
 
 [character]
 success_symbol = "[➜](bold green)"
@@ -71,11 +71,6 @@ style = "bold green"
 
 [c]
 symbol = " "
-format = "[$symbol]($style) "
-style = "bold blue"
-
-[cpp]
-symbol = "󰙲 "
 format = "[$symbol]($style) "
 style = "bold blue"
 
