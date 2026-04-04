@@ -6,14 +6,13 @@
   home.username = "gourav";
   home.homeDirectory = "/Users/gourav";
 
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.11";
   home.enableNixpkgsReleaseCheck = false;
 
   home.packages = with pkgs; [
     # core
     aria2
     bat
-    bat-extras.batman
     dust
     eza
     fd
@@ -23,14 +22,14 @@
     ripgrep
     zoxide
     glow # Markdown Reader
-    inetutils # telnet etc by GNU.
+    # inetutils # telnet etc by GNU.
     tealdeer # tldr (rust)
 
     # dev
     fish
     neovim
     nodejs
-    tmux
+    # tmux
     hyperfine
     silicon
 

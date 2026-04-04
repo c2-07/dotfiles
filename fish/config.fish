@@ -1,173 +1,138 @@
-if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-end
+# ENV + PATH
 
-# env vars
-set -gx HOMEBREW_NO_ENV_HINTS 1
-# set -gx RUSTFLAGS "-C linker=clang -C link-arg=-fuse-ld=lld"
-set -gx CFLAGS "-std=c99 -Wall -Werror"
-set -gx VIRTUAL_ENV_DISABLE_PROMPT 1
-set -gx CARGO_TARGET_DIR "$HOME/.cargo-target"
-set -gx EDITOR nvim
-# /usr/share/man's Manpages
-if type -q xcrun
-    set -gx MANPATH $MANPATH (xcrun --show-sdk-path)/usr/share/man
-end
+set -gx homebrew_no_env_hints 1
+set -gx cflags "-std=c99 -wall -werror"
+set -gx virtual_env_disable_prompt 1
+set -gx cargo_target_dir "$home/.cargo-target"
+set -gx editor nvim
 
-# safe PATH adding
+# NEVER call npm here
+set -gx path ~/.npm-global/bin $path
+
 function __safe_add_path
     for p in $argv
         if test -d $p
-            set -g PATH $p $PATH
+            set -g path $p $path
         end
     end
 end
 
-__safe_add_path ~/.local/bin
-__safe_add_path /opt/homebrew/bin
-__safe_add_path ~/.rustup/toolchains/stable-aarch64-apple-darwin/bin
-
-# starship (only if installed)
-if type -q starship
-    starship init fish --print-full-init | source
-end
-
-# direnv
-if type -q direnv
-    direnv hook fish | source
-end
-
-# manpager
-if type -q bat
-    set -gx MANPAGER bat
-end
-
-# greeting
-function fish_greeting
-    # interactive shells only
-    status --is-interactive; or return
-
-    # run once per login session
-    if not set -q __NANOFETCH_RAN
-        set -g __NANOFETCH_RAN 1
-
-        if test -x ~/.local/bin/nanofetch
-            ~/.local/bin/nanofetch
-        end
-    end
-end
-
-# safe alias wrapper
 function __safe_alias
     if type -q $argv[2]
         alias $argv[1]="$argv[2]"
     end
 end
 
-# basic aliases
-alias reload="source ~/dotfiles/fish/config.fish"
-alias fish_config="nvim ~/.config/fish/config.fish"
-alias vi=nvim
 
-# ls / tree
-if type -q eza
-    alias ls='eza -l --group-directories-first --no-user --no-time'
-    alias la='eza -la --group-directories-first'
-    alias ll='eza -l --group-directories-first'
-    alias lt='eza -aT'
-    alias ldot='eza -a --ignore-glob="[!.]*"'
-    alias tree="eza --tree"
-else
-    alias ls="ls -lah"
-end
+# Binary Path (Slow)
+# __safe_add_path ~/.local/bin
+# __safe_add_path /opt/homebrew/bin
+# __safe_add_path ~/.rustup/toolchains/stable-aarch64-apple-darwin/bin
 
-# cat
-if type -q bat
-    alias cat="bat -p"
-end
 
-# git
-__safe_alias g git
-alias gs="git status"
-alias gc="git commit -m"
-alias gp="git push"
+# Binary Path (Fast)
+set -gx PATH \
+    ~/.npm-global/bin \
+    ~/.local/bin \
+    /opt/homebrew/bin \
+    ~/.rustup/toolchains/stable-aarch64-apple-darwin/bin \
+    $PATH
 
-# navigation
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
+set -gx PATH (string split ':' $PATH | awk '!seen[$0]++')
 
-# search tools
-__safe_alias grep rg
-__safe_alias find fd
 
-# brew
-if type -q brew
-    alias xi="brew install"
-    alias xr="brew uninstall"
-    alias xq="brew info"
-end
+function __init_nix --on-event fish_postexec
+    functions -e __init_nix
 
-if type -q aria2c
-    alias aget="aria2c -x 16 -s 48 -k 4M --file-allocation=falloc"
-    alias agetslow='aria2c -x 8 -s 16 --enable-http-pipelining=true'
-    alias ator='aria2c --enable-dht=true --enable-dht6=true --bt-max-peers=128 --seed-time=0 --seed-ratio=0.15'
-    alias amag='aria2c --enable-dht=true --enable-dht6=true --bt-max-peers=128 --seed-time=0 --seed-ratio=0.15'
-    alias aresume="aria2c --input-file=$HOME/.aria2/aria2.session --save-session=$HOME/.aria2/aria2.session"
-end
-
-# backup
-function backup --argument file
-    if test -f $file
-        cp $file $file.bak
-    else
-        echo "file not found: $file"
+    if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+        source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
     end
 end
 
-# zoxide
-if type -q zoxide
-    zoxide init fish | source
+
+function __init_starship --on-event fish_prompt
+    functions -e __init_starship
+
+    if type -q starship
+        starship init fish | source
+    end
 end
 
 
-# Auto-start tmux (only if available)
-if status is-interactive
-    if not set -q TMUX
-        if command -q tmux
+function z
+    functions -e z
 
-            set SESSION main
-            set LOCK /tmp/tmux-main.lock
+    if type -q zoxide
+        zoxide init fish | source
+        z $argv
+    else
+        echo "zoxide not installed"
+    end
+end
 
-            if not test -e $LOCK
-                touch $LOCK
 
-                tmux has-session -t $SESSION 2>/dev/null
-                if test $status -ne 0
-                    tmux new-session -d -s $SESSION -n fish
-                    tmux new-window -t $SESSION -n nvim
-                    tmux new-window -t $SESSION -n misc
-                end
+function __init_direnv --on-event fish_preexec
+    functions -e __init_direnv
 
-                tmux attach -t $SESSION
-                exit
-            end
+    if type -q direnv
+        direnv hook fish | source
+    end
+end
+
+
+function fish_greeting
+    status --is-interactive; or return
+
+    if not set -q __nanofetch_ran
+        set -g __nanofetch_ran 1
+
+        if test -x ~/.local/bin/nanofetch
+            command ~/.local/bin/nanofetch
         end
     end
 end
 
 
-# file copy
+alias reload="source ~/.config/fish/config.fish"
+alias vi=nvim
+
+if type -q eza
+    alias ls='eza -l --group-directories-first --no-user --no-time'
+else
+    alias ls="ls -lah"
+end
+
+if type -q bat
+    alias cat="bat -p"
+end
+
+alias g=git
+alias gs="git status"
+alias gc="git commit -m"
+alias gp="git push"
+
+alias ..="cd .."
+alias ...="cd ../.."
+
+function backup --argument file
+    if test -f "$file"
+        cp "$file" "$file.bak"
+    else
+        echo "file not found: $file"
+    end
+end
+
 function copy
-    set count (count $argv | tr -d \n)
-    if test "$count" = 2; and test -d "$argv[1]"
-        command cp -r (string trim -r -c '/') $argv[1] $argv[2]
+    set count (count $argv)
+
+    if test "$count" -eq 2; and test -d "$argv[1]"
+        command cp -r "$argv[1]" "$argv[2]"
     else
         command cp $argv
     end
 end
 
-function r --description "Compile and run source files"
+function r --description "compile and run source files"
     if test (count $argv) -ne 1
         echo "usage: r <source-file>"
         return 1
@@ -175,14 +140,14 @@ function r --description "Compile and run source files"
 
     set file $argv[1]
 
-    if not test -f $file
-        echo "File not found: $file"
+    if not test -f "$file"
+        echo "file not found: $file"
         return 1
     end
 
-    set parts (string split -r -m1 . $file)
+    set parts (string split -r -m1 . "$file")
     if test (count $parts) -ne 2
-        echo "Invalid filename"
+        echo "invalid filename"
         return 1
     end
 
@@ -191,63 +156,42 @@ function r --description "Compile and run source files"
 
     switch $ext
         case c
-            clang $file -std=c11 -Wall -Wextra -g -O2 -o $name
-            or return 1
-            ./$name
-            set status_code $status
-            rm -f $name
-            return $status_code
+            clang "$file" -std=c11 -Wall -Wextra -O2 -o "$name"; or return
+            ./"$name"; set code $status; rm -f "$name"; return $code
 
         case cpp cc cxx
-            clang++ $file -std=c++20 -Wall -Wextra -Wpedantic -g -O2 -o $name
-            or return 1
-            ./$name
-            set status_code $status
-            rm -f $name
-            return $status_code
+            clang++ "$file" -std=c++20 -Wall -Wextra -O2 -o "$name"; or return
+            ./"$name"; set code $status; rm -f "$name"; return $code
 
         case rs
-            rustc $file -C opt-level=2
-            or return 1
-            ./$name
-            set status_code $status
-            rm -f $name
-            return $status_code
+            rustc "$file" -C opt-level=2 -o "$name"; or return
+            ./"$name"; set code $status; rm -f "$name"; return $code
 
         case go
-            go run $file
+            go run "$file"
             return $status
 
         case java
-            javac $file
-            or return 1
-            java $name
-            set status_code $status
-            rm -f $name.class
-            return $status_code
+            javac "$file"; or return
+            java "$name"; set code $status; rm -f "$name.class"; return $code
 
         case zig
-            zig run $file
+            zig run "$file"
             return $status
 
         case asm s
-            nasm -f elf64 $file -o $name.o
-            or return 1
-            ld $name.o -o $name
-            or return 1
-            ./$name
-            set status_code $status
-            rm -f $name.o $name
-            return $status_code
+            nasm -f elf64 "$file" -o "$name.o"; or return
+            ld "$name.o" -o "$name"; or return
+            ./"$name"; set code $status; rm -f "$name.o" "$name"; return $code
 
         case '*'
-            echo "Unsupported language: .$ext"
+            echo "unsupported language: .$ext"
             return 1
     end
 end
 
-if test (uname) = Darwin
-    function develop --description "Init nix flake + direnv"
+if test (uname) = darwin
+    function develop --description "init nix flake + direnv"
         set template devshell
         set dir .
 
@@ -259,12 +203,12 @@ if test (uname) = Darwin
                 set template $argv[2]
         end
 
-        if not test -d $dir
-            echo "Directory '$dir' does not exist"
+        if not test -d "$dir"
+            echo "directory '$dir' does not exist"
             return 1
         end
 
-        pushd $dir >/dev/null
+        pushd "$dir" >/dev/null
 
         if test -e flake.nix
             echo "flake.nix already exists — aborting"

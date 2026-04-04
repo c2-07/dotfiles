@@ -99,5 +99,4 @@ vim.keymap.set("n", "<Esc>", function()
 end, { silent = true })
 
 -- Do not copy to clipboard on x
-map("n", "d", '"_d', opts)
-map("v", "d", '"_d', opts)
+map("n", "c", '"_c', opts)
