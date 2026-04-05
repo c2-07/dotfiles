@@ -9,6 +9,8 @@
   home.stateVersion = "25.11";
   home.enableNixpkgsReleaseCheck = false;
 
+  targets.darwin.copyApps.enable = false;
+
   home.packages = with pkgs; [
     # core
     aria2
@@ -29,6 +31,7 @@
     fish
     neovim
     nodejs
+    bun
     # tmux
     hyperfine
     silicon
