@@ -31,7 +31,6 @@
     fish
     neovim
     nodejs
-    bun
     # tmux
     hyperfine
     silicon

@@ -190,7 +190,7 @@ function r --description "compile and run source files"
     end
 end
 
-if test (uname) = darwin
+if test (uname) = Darwin
     function develop --description "init nix flake + direnv"
         set template devshell
         set dir .
@@ -216,7 +216,7 @@ if test (uname) = darwin
             return 1
         end
 
-        nix flake init -t github:integralcat/nix-templates#$template
+        nix flake init -t github:c2-07/nix-templates#$template
 
         if not test -e .envrc
             echo "use flake" > .envrc
