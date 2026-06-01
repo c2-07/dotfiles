@@ -17,10 +17,6 @@ map("n", "bd", function()
   vim.cmd("bdelete")
 end)
 
--- Ctrl + V to Paste
-map("n", "<C-v>", '"+p', { noremap = true, silent = true })
-map("i", "<C-v>", "<C-r>+", { noremap = true, silent = true })
-
 if vim.g.neovide then
   vim.keymap.set({ "n", "v" }, "<C-=>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
   vim.keymap.set({ "n", "v" }, "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
@@ -100,3 +96,6 @@ end, { silent = true })
 
 -- Do not copy to clipboard on x
 map("n", "c", '"_c', opts)
+
+-- Prevent pasting over visual selection from overwriting your clipboard
+map("x", "p", '"_dP', opts)

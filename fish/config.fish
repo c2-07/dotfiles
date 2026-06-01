@@ -93,11 +93,13 @@ function fish_greeting
 end
 
 
-alias reload="source ~/.config/fish/config.fish"
 alias vi=nvim
+alias reload="source ~/.config/fish/config.fish"
+alias fish_config="nvim ~/.config/fish/config.fish"
 
 if type -q eza
     alias ls='eza -l --group-directories-first --no-user --no-time'
+    alias tree='eza --tree'
 else
     alias ls="ls -lah"
 end
@@ -106,13 +108,23 @@ if type -q bat
     alias cat="bat -p"
 end
 
-alias g=git
+if type -q aria2c
+    alias aget="aria2c -x 16 -s 48 -k 4M --file-allocation=falloc"
+    alias agetslow='aria2c -x 8 -s 16 --enable-http-pipelining=true'
+    alias ator='aria2c --enable-dht=true --enable-dht6=true --bt-max-peers=128 --seed-time=0 --seed-ratio=0.15'
+    alias amag='aria2c --enable-dht=true --enable-dht6=true --bt-max-peers=128 --seed-time=0 --seed-ratio=0.15'
+    alias aresume="aria2c --input-file=$HOME/.aria2/aria2.session --save-session=$HOME/.aria2/aria2.session"
+end
+
+# git
 alias gs="git status"
 alias gc="git commit -m"
 alias gp="git push"
 
+# navigation
 alias ..="cd .."
 alias ...="cd ../.."
+alias ....="cd ../../.."
 
 function backup --argument file
     if test -f "$file"
@@ -228,3 +240,12 @@ if test (uname) = Darwin
         popd >/dev/null
     end
 end
+
+# Added by Antigravity
+fish_add_path /Users/gourav/.antigravity/antigravity/bin
+
+# opencode
+fish_add_path /Users/gourav/.opencode/bin
+
+# Include macOS default man paths for Nix man
+set -gx MANPATH $MANPATH (/usr/bin/manpath)

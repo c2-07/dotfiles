@@ -1,11 +1,11 @@
 # === Colors ===
 foreground = d6d6d6
-background = 111111
+background = 0a0a0a
 selection-background = 242630
 selection-foreground = f8f8f2
 
 # === UI ===
-background-opacity = 0.9
+background-opacity = 0.93
 
 # === Font ===
 font-family = "JetBrainsMono Nerd Font"
@@ -21,8 +21,8 @@ window-height = 29
 
 # === MISC ===
 # confirm-close-surface = false
-macos-titlebar-style = tabs
-# macos-titlebar-proxy-icon = hidden
+# macos-titlebar-style = hidden
+macos-titlebar-proxy-icon = hidden
 macos-window-buttons = hidden
 macos-option-as-alt = true
 focus-follows-mouse = true
@@ -31,7 +31,7 @@ window-inherit-working-directory = false
 
 # === CURSOR ===
 shell-integration-features = no-cursor
-cursor-style = block 
+cursor-style = block
 cursor-color = f096cb
 cursor-style-blink = false
 

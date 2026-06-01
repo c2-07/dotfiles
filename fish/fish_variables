@@ -2,6 +2,7 @@
 # VERSION: 3.0
 SETUVAR --export CPPFLAGS:\x2dI/opt/homebrew/opt/llvm/include
 SETUVAR --export EDITOR:nvim
+SETUVAR --export HOMEBREW_NO_ENV_HINTS:1
 SETUVAR --export HUSHLOGIN:TRUE
 SETUVAR --export KITTY_ALLOW_GRAPHICS:1
 SETUVAR --export LDFLAGS:\x2dL/opt/homebrew/opt/llvm/lib
@@ -13,7 +14,7 @@ SETUVAR __fish_git_prompt_showstashstate:0
 SETUVAR __fish_git_prompt_showuntrackedfiles:1
 SETUVAR __fish_git_prompt_showupstream:0
 SETUVAR __fish_git_prompt_use_informative_chars:true
-SETUVAR __fish_initialized:4300
+SETUVAR __fish_initialized:3800
 SETUVAR _fisher_edc_2F_bass_files:\x7e/\x2econfig/fish/functions/__bass\x2epy\x1e\x7e/\x2econfig/fish/functions/bass\x2efish
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2econfig/fish/functions/fisher\x2efish\x1e\x7e/\x2econfig/fish/completions/fisher\x2efish
 SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_bang_2D_bang_files:\x7e/\x2econfig/fish/functions/__history_previous_command\x2efish\x1e\x7e/\x2econfig/fish/functions/__history_previous_command_arguments\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/plugin\x2dbang\x2dbang\x2efish
@@ -22,5 +23,5 @@ SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fish_greeting:\x1d
 SETUVAR fish_key_bindings:fish_default_key_bindings
 SETUVAR fish_prompt_git_async:true
-SETUVAR fish_user_paths:/nix/store/8nn1av30k39rm61zpvzrmmviws6zlla2\x2dnodejs\x2d22\x2e22\x2e0/bin\x1e/Users/gourav/\x2enix\x2dprofile/bin\x1e/nix/var/nix/profiles/default/bin\x1e/Users/gourav/\x2eopencode/bin\x1e/opt/homebrew/opt/node\x4022/bin\x1e/opt/homebrew/opt/llvm/bin\x1e/opt/homebrew/bin\x1e/Applications/Ghostty\x2eapp/Contents/MacOS
+SETUVAR fish_user_paths:/Users/gourav/\x2eantigravity/antigravity/bin\x1e/nix/store/8nn1av30k39rm61zpvzrmmviws6zlla2\x2dnodejs\x2d22\x2e22\x2e0/bin\x1e/Users/gourav/\x2enix\x2dprofile/bin\x1e/nix/var/nix/profiles/default/bin\x1e/Users/gourav/\x2eopencode/bin\x1e/opt/homebrew/opt/node\x4022/bin\x1e/opt/homebrew/opt/llvm/bin\x1e/opt/homebrew/bin\x1e/Applications/Ghostty\x2eapp/Contents/MacOS
 SETUVAR hydro_multiline:true

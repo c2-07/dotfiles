@@ -118,3 +118,6 @@ command -v aria2c >/dev/null && {
   alias aget='aria2c -x16 -s48 -k4M --file-allocation=falloc'
   alias amag='aria2c --enable-dht --bt-max-peers=128 --seed-time=0'
 }
+
+# Include macOS default man paths for Nix man
+export MANPATH="$MANPATH:$(/usr/bin/manpath)"

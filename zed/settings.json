@@ -7,6 +7,13 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "title_bar": {
+    "show_user_menu": false,
+    "show_branch_icon": true,
+  },
+  "edit_predictions": {
+    "provider": "copilot",
+  },
   "collaboration_panel": {
     "dock": "right",
   },
@@ -32,13 +39,21 @@
   },
   "vim_mode": true,
   "terminal": {
+    "show_count_badge": true,
     "cursor_shape": "bar",
     "option_as_meta": true,
   },
   "base_keymap": "VSCode",
   "agent": {
-    "enabled": false,
-    "button": false,
+    "dock": "right",
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-5-mini",
+      "enable_thinking": false,
+      "effort": "high",
+    },
+    "enabled": true,
+    "button": true,
     "model_parameters": [],
   },
   "relative_line_numbers": "enabled",
@@ -70,6 +85,7 @@
     "show_nav_history_buttons": false,
   },
   "tabs": {
+    "activate_on_close": "neighbour",
     "show_diagnostics": "all",
   },
   "toolbar": {

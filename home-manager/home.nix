@@ -31,7 +31,7 @@
     fish
     neovim
     nodejs
-    # tmux
+    tmux
     hyperfine
     silicon
 
@@ -40,6 +40,7 @@
 
     # lang
     rustup
+    bear
     uv
 
     # shell
