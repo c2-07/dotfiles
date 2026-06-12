@@ -3,19 +3,21 @@ local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 
 -- LSP Definition and References
-map("n", "<leader>e", ":Lexplore<CR>", opts)
-map("n", "gd", vim.lsp.buf.definition)
-map("n", "gd", vim.lsp.buf.references)
+map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
+map("n", "gd", vim.lsp.buf.definition, { desc = "LSP Definition" })
+map("n", "gr", vim.lsp.buf.references, { desc = "LSP References" })
 map("n", "K", vim.lsp.buf.hover)
 map("i", "<C-k>", vim.lsp.buf.signature_help)
 map("n", "<C-k>", vim.lsp.buf.signature_help)
 
+-- NvChad features
+map("n", "<leader>th", function() require("nvchad.themes").open() end, { desc = "Theme Switcher" })
+map("n", "<leader>ra", function() require("nvchad.lsp.renamer").open() end, { desc = "LSP Rename" })
+
 -- Buffer Navigation
 map("n", "bn", ":bnext<CR>", { desc = "Next buffer" })
 map("n", "bp", ":bprevious<CR>", { desc = "Prev buffer" })
-map("n", "bd", function()
-  vim.cmd("bdelete")
-end)
+map("n", "bd", "<cmd>bd<CR>", { desc = "Close buffer" })
 
 if vim.g.neovide then
   vim.keymap.set({ "n", "v" }, "<C-=>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
@@ -36,7 +38,7 @@ map("n", "]d", vim.diagnostic.goto_next)
 -- Tabs
 map("n", "<C-t>", ":tabnew<CR>")
 map("n", "<C-x>", ":tabclose<CR>")
-map("n", "<leader>x", ":bd<CR>") -- Close the current buffer
+map("n", "<leader>x", "<cmd>bd<CR>", { desc = "Close buffer" }) -- Close the current buffer
 map("n", "H", ":tabprevious<CR>")
 map("n", "L", ":tabnext<CR>")
 map("n", "<Esc>", ":noh<CR><Esc>")

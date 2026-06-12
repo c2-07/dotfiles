@@ -28,6 +28,8 @@ macos-option-as-alt = true
 focus-follows-mouse = true
 shell-integration = fish
 window-inherit-working-directory = false
+bell-features = no-title
+mouse-hide-while-typing = true
 
 # === CURSOR ===
 shell-integration-features = no-cursor

@@ -23,6 +23,11 @@ return {
 					client.server_capabilities.documentFormattingProvider = false
 					client.server_capabilities.documentRangeFormattingProvider = false
 				end
+
+        -- NvChad signature help
+        if client.server_capabilities.signatureHelpProvider then
+          require("nvchad.lsp.signature").setup(client, bufnr)
+        end
 			end
 
 			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
