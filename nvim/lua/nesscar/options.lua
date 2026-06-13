@@ -1,3 +1,5 @@
+vim.g.theme = "gruvbox" -- active theme
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 

@@ -10,9 +10,7 @@ map("n", "K", vim.lsp.buf.hover)
 map("i", "<C-k>", vim.lsp.buf.signature_help)
 map("n", "<C-k>", vim.lsp.buf.signature_help)
 
--- NvChad features
-map("n", "<leader>th", function() require("nvchad.themes").open() end, { desc = "Theme Switcher" })
-map("n", "<leader>ra", function() require("nvchad.lsp.renamer").open() end, { desc = "LSP Rename" })
+-- NvChad features removed (using LSPSaga instead)
 
 -- Buffer Navigation
 map("n", "bn", ":bnext<CR>", { desc = "Next buffer" })
@@ -101,3 +99,22 @@ map("n", "c", '"_c', opts)
 
 -- Prevent pasting over visual selection from overwriting your clipboard
 map("x", "p", '"_dP', opts)
+
+-- Neovide paste keymaps
+map("c", "<C-v>", "<C-r>+")
+map("c", "<D-v>", "<C-r>+")
+map("i", "<D-v>", "<C-r>+")
+
+-- Enter normal mode in terminal mode
+map("t", "<Esc>", [[<C-\><C-n>]])
+
+-- Toggle terminal
+map({ "n", "t" }, "<C-/>", function()
+  local mode = vim.api.nvim_get_mode().mode
+
+  vim.cmd("ToggleTerm")
+
+  if mode == "n" then
+    vim.cmd("startinsert")
+  end
+end)

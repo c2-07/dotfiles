@@ -10,8 +10,5 @@ return {
         height = math.floor(vim.o.lines * 0.7),
       },
     })
-    
-    -- Ensure <C-_> also works (many terminals send Ctrl+/ as Ctrl+_)
-    vim.keymap.set({ "n", "t" }, "<C-_>", "<cmd>ToggleTerm<cr>", { desc = "Toggle Terminal" })
   end,
 }

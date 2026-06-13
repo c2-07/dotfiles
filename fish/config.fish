@@ -93,6 +93,7 @@ function fish_greeting
 end
 
 
+alias neo="open -a neovide"
 alias vi=nvim
 alias reload="source ~/.config/fish/config.fish"
 alias fish_config="nvim ~/.config/fish/config.fish"

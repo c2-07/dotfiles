@@ -1,7 +1,7 @@
 local M = {}
 
 M.base46 = {
-  theme = "gruvbox", -- default theme
+  theme = "gruvbox", -- options: tokyonight, gruvbox, catppuccin, rose-pine
   transparency = true,
   hl_override = {
     -- Core UI
