@@ -1,52 +1,47 @@
 local M = {}
 
-local black = "#000000"
-local border_gray = "#303030"
-local white = "#ffffff"
+local highlights = {
+  Normal = { bg = "NONE", fg = "#bdae93" },
+  NormalNC = { bg = "NONE" },
+  SignColumn = { bg = "NONE" },
+  EndOfBuffer = { bg = "NONE" },
+  FoldColumn = { bg = "NONE" },
+  LineNr = { bg = "NONE", fg = "#928374" },
+  CursorLineNr = { bg = "NONE", fg = "#a89984" },
 
-local ui_overrides = {
-  -- Floating Windows
-  NormalFloat = { bg = black },
-  FloatBorder = { bg = black, fg = border_gray },
-  FloatTitle = { bg = black, fg = white, bold = true },
+  NormalFloat = { bg = "NONE" },
+  FloatBorder = { bg = "NONE", fg = "#303030" },
 
-  -- Popup Menus (Pmenu / Blink / CMP)
-  Pmenu = { bg = black },
-  PmenuSel = { bg = "#222222" },
-  PmenuSbar = { bg = black },
-  PmenuThumb = { bg = border_gray },
-  BlinkCmpMenu = { bg = black },
-  BlinkCmpMenuBorder = { fg = border_gray, bg = black },
-  BlinkCmpDoc = { bg = black },
-  BlinkCmpDocBorder = { fg = border_gray, bg = black },
+  Pmenu = { bg = "NONE" },
+  PmenuSbar = { bg = "NONE" },
 
-  -- Telescope
-  TelescopeNormal = { bg = black },
-  TelescopeBorder = { bg = black, fg = border_gray },
-  TelescopePromptNormal = { bg = black },
-  TelescopePromptBorder = { bg = black, fg = border_gray },
-  TelescopeResultsNormal = { bg = black },
-  TelescopeResultsBorder = { bg = black, fg = border_gray },
-  TelescopePreviewNormal = { bg = black },
-  TelescopePreviewBorder = { bg = black, fg = border_gray },
-  TelescopeTitle = { bg = black, fg = white, bold = true },
+  TelescopeNormal = { bg = "NONE" },
+  TelescopeBorder = { bg = "NONE", fg = "#303030" },
+  TelescopePromptNormal = { bg = "NONE" },
+  TelescopePromptBorder = { bg = "NONE", fg = "#303030" },
+  TelescopeResultsNormal = { bg = "NONE" },
+  TelescopeResultsBorder = { bg = "NONE", fg = "#303030" },
+  TelescopePreviewNormal = { bg = "NONE" },
+  TelescopePreviewBorder = { bg = "NONE", fg = "#303030" },
 }
 
-function M.apply_overrides()
-  for group, opts in pairs(ui_overrides) do
+function M.apply()
+  for group, opts in pairs(highlights) do
     vim.api.nvim_set_hl(0, group, opts)
   end
 end
 
 function M.setup()
-  -- Apply on ColorScheme change
+  local group = vim.api.nvim_create_augroup("UserHighlights", { clear = true })
+
   vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "*",
-    callback = M.apply_overrides,
+    group = group,
+    callback = function()
+      vim.schedule(M.apply)
+    end,
   })
 
-  -- Initial apply
-  M.apply_overrides()
+  M.apply()
 end
 
 return M
