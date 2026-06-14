@@ -1,4 +1,4 @@
-vim.g.theme = "gruvbox" -- active theme
+vim.g.theme = "gruvbox" -- active theme: gruvbox | kanagawa | gruvbox-material
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
