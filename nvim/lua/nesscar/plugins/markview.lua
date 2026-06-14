@@ -9,7 +9,16 @@ return {
     local markview = require("markview")
 
     markview.setup({
-        -- No presets, rely on manual highlights
+        preview = {
+            condition = function(buf)
+                for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+                    if vim.api.nvim_win_get_config(win).relative ~= "" then
+                        return false
+                    end
+                end
+                return nil
+            end,
+        },
     })
 
     local function get_color(group, attr)

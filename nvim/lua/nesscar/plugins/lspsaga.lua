@@ -19,11 +19,6 @@ return {
         lines = { "┗", "┣", "┃", "━", "┏" },
         kind = nil,
       },
-      hover = {
-        max_width = 0.6,
-        open_link = "gx",
-        open_cmd = "!chrome",
-      },
       outline = {
         win_width = 30,
         win_position = "right",
@@ -41,9 +36,12 @@ return {
     -- Keymaps for LSPSaga
     vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", { desc = "Code Action" })
     vim.keymap.set("n", "<leader>ra", "<cmd>Lspsaga rename<cr>", { desc = "Rename" })
-    vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "Hover Doc" })
     vim.keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<cr>", { desc = "Toggle Outline" })
+    vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "Hover Doc" })
     vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<cr>", { desc = "Go to Definition" })
     vim.keymap.set("n", "gr", "<cmd>Lspsaga finder<cr>", { desc = "Find References" })
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to Implementation" })
+    vim.keymap.set("n", "gy", "<cmd>Lspsaga goto_type_definition<cr>", { desc = "Go to Type Definition" })
+    vim.keymap.set("n", "gh", "<cmd>Lspsaga finder<CR>", { desc = "Finder" })
   end,
 }

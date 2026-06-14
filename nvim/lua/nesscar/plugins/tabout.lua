@@ -24,8 +24,7 @@ return {
 				exclude = {}, -- tabout will ignore these filetypes
 			})
 		end,
-		dependencies = { -- These are optional
-			"nvim-treesitter/nvim-treesitter",
+		dependencies = {
 			"hrsh7th/nvim-cmp",
 		},
 		opt = true, -- Set this to true if the plugin is optional
