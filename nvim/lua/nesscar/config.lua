@@ -82,13 +82,39 @@ local indent_config = {
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("GlobalIndentConfig", { clear = true }),
 	callback = function(event)
+		local bufnr = event.buf
 		local filetype = event.match
+
+		-- Skip special buffers (floating windows, help, terminal, etc.)
+		if vim.bo[bufnr].buftype ~= "" or filetype == "" then
+			return
+		end
+
 		local indent = indent_config[filetype] or 2 -- Default to 2 spaces
 
-		-- Set indent for the current buffer
-		vim.bo.shiftwidth = indent
-		vim.bo.softtabstop = indent
-		vim.bo.tabstop = indent
+		-- Set indent for the current buffer ONLY if different to avoid redundant OptionSet events
+		if vim.bo[bufnr].shiftwidth ~= indent then
+			vim.bo[bufnr].shiftwidth = indent
+		end
+		if vim.bo[bufnr].softtabstop ~= indent then
+			vim.bo[bufnr].softtabstop = indent
+		end
+		if vim.bo[bufnr].tabstop ~= indent then
+			vim.bo[bufnr].tabstop = indent
+		end
+		if vim.bo[bufnr].expandtab ~= true then
+			vim.bo[bufnr].expandtab = true
+		end
+
+		-- Enable cindent for C-style languages as a fallback
+		if filetype == "c" or filetype == "cpp" then
+			if vim.bo[bufnr].cindent ~= true then
+				vim.bo[bufnr].cindent = true
+			end
+			if vim.bo[bufnr].indentexpr ~= "" then
+				vim.bo[bufnr].indentexpr = ""
+			end
+		end
 	end,
 })
 

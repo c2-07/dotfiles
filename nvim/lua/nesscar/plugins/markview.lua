@@ -3,7 +3,7 @@ return {
   lazy = false,
 
   -- Completion for `blink.cmp`
-  dependencies = { "saghen/blink.cmp" },
+  dependencies = { "saghen/blink.cmp", "nvim-treesitter/nvim-treesitter" },
 
   config = function()
     local markview = require("markview")

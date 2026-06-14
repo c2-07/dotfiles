@@ -20,4 +20,9 @@ vim.g.neovide_light_radius = 5
 vim.g.neovide_frame = "none"
 vim.o.guifont = "JetBrainsMono Nerd Font:h16"
 
-vim.g.neovide_message_area_drag_selection = true -- Allow paste via (cmd + v)
+-- macOS specific Neovide settings
+if vim.g.neovide then
+  vim.g.neovide_input_use_logo = true -- use apple/logo key for command
+end
+
+vim.g.neovide_message_area_drag_selection = true
