@@ -21,7 +21,6 @@ SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_bang_2D_bang_files:\x7e/\x2econfig
 SETUVAR _fisher_plugins:jorgebucaran/fisher\x1eedc/bass\x1eoh\x2dmy\x2dfish/plugin\x2dbang\x2dbang
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fish_greeting:\x1d
-SETUVAR fish_key_bindings:fish_default_key_bindings
 SETUVAR fish_prompt_git_async:true
 SETUVAR fish_user_paths:/Users/gourav/\x2eantigravity/antigravity/bin\x1e/nix/store/8nn1av30k39rm61zpvzrmmviws6zlla2\x2dnodejs\x2d22\x2e22\x2e0/bin\x1e/Users/gourav/\x2enix\x2dprofile/bin\x1e/nix/var/nix/profiles/default/bin\x1e/Users/gourav/\x2eopencode/bin\x1e/opt/homebrew/opt/node\x4022/bin\x1e/opt/homebrew/opt/llvm/bin\x1e/opt/homebrew/bin\x1e/Applications/Ghostty\x2eapp/Contents/MacOS
 SETUVAR hydro_multiline:true
