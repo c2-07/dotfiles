@@ -23,7 +23,7 @@ read_only = " "
 symbol = "" # " "
 only_attached = true
 format = "[$symbol$branch]($style) "
-style = "bold purple dimmed"
+style = "bold purple"
 
 # --- Git Status (symbols, no emojis) ---
 [git_status]
