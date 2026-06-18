@@ -5,6 +5,7 @@ set -gx cflags "-std=c99 -wall -werror"
 set -gx virtual_env_disable_prompt 1
 set -gx cargo_target_dir "$home/.cargo-target"
 set -gx editor nvim
+set -gx LOCALSTACK_AUTH_TOKEN "ls-lEWI6575-Zuku-5595-VIfe-raLomaFE7d09"
 
 # NEVER call npm here
 set -gx path ~/.npm-global/bin $path

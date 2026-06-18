@@ -106,7 +106,7 @@ vim.api.nvim_create_autocmd("FileType", {
 			vim.bo[bufnr].expandtab = true
 		end
 
-		-- Enable cindent for C-style languages as a fallback
+		-- Enable cindent for C-style languages with sane cinoptions
 		if filetype == "c" or filetype == "cpp" then
 			if vim.bo[bufnr].cindent ~= true then
 				vim.bo[bufnr].cindent = true
@@ -114,6 +114,7 @@ vim.api.nvim_create_autocmd("FileType", {
 			if vim.bo[bufnr].indentexpr ~= "" then
 				vim.bo[bufnr].indentexpr = ""
 			end
+			vim.opt_local.cinoptions = "N-s, e0, s, :0, =0, l1, (0, Ws, L0"
 		end
 	end,
 })
