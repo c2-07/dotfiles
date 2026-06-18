@@ -22,5 +22,6 @@ return {
       "toml",
     },
     auto_install = true,
+    highlight = { enable = true },
   },
 }

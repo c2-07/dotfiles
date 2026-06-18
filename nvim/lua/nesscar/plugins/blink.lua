@@ -4,6 +4,7 @@ return {
 
   opts = {
     cmdline = { enabled = true },
+    signature = { enabled = false },
 
     snippets = {
       preset = "luasnip",

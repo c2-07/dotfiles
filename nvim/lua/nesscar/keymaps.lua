@@ -1,27 +1,34 @@
 local opts = { noremap = true, silent = true }
-
 local map = vim.keymap.set
 
--- LSP Definition and References
+-- General
+map("n", "<Esc>", function()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local cfg = vim.api.nvim_win_get_config(win)
+    if cfg.relative ~= "" then
+      vim.api.nvim_win_close(win, false)
+      return
+    end
+  end
+  vim.cmd("noh")
+end, { silent = true })
+
+map("n", "c", '"_c', opts)
+map("x", "p", '"_dP', opts)
+
+-- File Explorer
 map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
-map("n", "gd", vim.lsp.buf.definition, { desc = "LSP Definition" })
-map("n", "gr", vim.lsp.buf.references, { desc = "LSP References" })
-map("n", "K", vim.lsp.buf.hover)
-map("i", "<C-k>", vim.lsp.buf.signature_help)
-map("n", "<C-k>", vim.lsp.buf.signature_help)
 
--- NvChad features removed (using LSPSaga instead)
-
--- Buffer Navigation
-map("n", "bn", ":bnext<CR>", { desc = "Next buffer" })
-map("n", "bp", ":bprevious<CR>", { desc = "Prev buffer" })
-map("n", "bd", "<cmd>bd<CR>", { desc = "Close buffer" })
-
-if vim.g.neovide then
-  vim.keymap.set({ "n", "v" }, "<C-=>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
-  vim.keymap.set({ "n", "v" }, "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
-  vim.keymap.set({ "n", "v" }, "<C-0>", ":lua vim.g.neovide_scale_factor = 1<CR>")
-end
+-- LSP
+map("n", "gd", function() vim.lsp.buf.definition() end, { desc = "Go to Definition" })
+map("n", "gr", function() vim.lsp.buf.references() end, { desc = "References" })
+map("n", "gi", function() vim.lsp.buf.implementation() end, { desc = "Implementation" })
+map("n", "gy", function() vim.lsp.buf.type_definition() end, { desc = "Type Definition" })
+map("n", "K", function() vim.lsp.buf.hover() end, { desc = "Hover Docs" })
+map("n", "gK", function() vim.lsp.buf.signature_help() end, { desc = "Signature Help" })
+map("i", "<C-k>", function() vim.lsp.buf.signature_help() end, { desc = "Signature Help" })
+map("n", "<leader>ca", function() vim.lsp.buf.code_action() end, { desc = "Code Action" })
+map("n", "<leader>ra", function() vim.lsp.buf.rename() end, { desc = "Rename" })
 
 -- Diagnostics
 map("n", "<leader>d", function()
@@ -30,48 +37,9 @@ map("n", "<leader>d", function()
     close_events = { "CursorMoved", "BufHidden", "InsertEnter" },
   })
 end)
-map("n", "[d", vim.diagnostic.goto_prev)
-map("n", "]d", vim.diagnostic.goto_next)
 
--- Tabs
-map("n", "<C-t>", ":tabnew<CR>")
-map("n", "<C-x>", ":tabclose<CR>")
-map("n", "<leader>x", "<cmd>bd<CR>", { desc = "Close buffer" }) -- Close the current buffer
-map("n", "H", ":tabprevious<CR>")
-map("n", "L", ":tabnext<CR>")
-map("n", "<Esc>", ":noh<CR><Esc>")
-
--- SPLITS (| and -)
-map("n", "<leader>\\", "<cmd>vsplit<CR>", opts)
-map("n", "<leader>-", "<cmd>split<CR>", opts)
-
--- MOVE BETWEEN PANES (hjkl)
--- map("n", "<leader>h", "<C-w>h", opts)
--- map("n", "<leader>j", "<C-w>j", opts)
--- map("n", "<leader>k", "<C-w>k", opts)
--- map("n", "<leader>l", "<C-w>l", opts)
-
--- RESIZE PANES (H J K L)
-map("n", "<C-Up>", ":resize -2<CR>", opts)
-map("n", "<C-Down>", ":resize +2<CR>", opts)
-map("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-map("n", "<C-Right>", ":vertical resize +2<CR>", opts)
-
--- CLOSE / FOCUS PANES
-map("n", "<C-w>x", "<cmd>close<CR>", opts)
-map("n", "<C-w>o", "<cmd>only<CR>", opts)
-
--- TABS = TMUX WINDOWS
-map("n", "<leader>c", "<cmd>tabnew<CR>", opts)
-map("n", "<leader>zz", "<cmd>tab split<CR>", opts)
-map("n", "<leader><C-h>", "<cmd>tabprevious<CR>", opts)
-map("n", "<leader><C-l>", "<cmd>tabnext<CR>", opts)
-
--- inline git inline diff
-map("n", "<leader>gd", ":Gitsigns preview_hunk_inline<CR>")
-
--- conform powered formatting
-map("n", "<C-f>", function()
+-- Formatting
+map("n", "<leader>cf", function()
   require("conform").format({ async = true, lsp_fallback = false })
 end, { desc = "Format file (conform)" })
 
@@ -79,42 +47,51 @@ vim.api.nvim_create_user_command("Format", function()
   vim.lsp.buf.format({ async = true })
 end, {})
 
--- Close any floating window
-vim.keymap.set("n", "<Esc>", function()
-  -- close any floating window first
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local cfg = vim.api.nvim_win_get_config(win)
-    if cfg.relative ~= "" then
-      vim.api.nvim_win_close(win, false)
-      return
-    end
-  end
+-- Buffers
+map("n", "bn", ":bnext<CR>")
+map("n", "bp", ":bprevious<CR>")
+map("n", "bd", "<cmd>bd<CR>")
+map("n", "<leader>x", "<cmd>bd<CR>")
 
-  -- no floats → clear search highlight
-  vim.cmd("noh")
-end, { silent = true })
+-- Tabs
+map("n", "<C-t>", ":tabnew<CR>")
+map("n", "<C-x>", ":tabclose<CR>")
+map("n", "H", ":tabprevious<CR>")
+map("n", "L", ":tabnext<CR>")
+map("n", "<leader>c", "<cmd>tabnew<CR>", opts)
+map("n", "<leader>zz", "<cmd>tab split<CR>", opts)
+map("n", "<leader><C-h>", "<cmd>tabprevious<CR>", opts)
+map("n", "<leader><C-l>", "<cmd>tabnext<CR>", opts)
 
--- Do not copy to clipboard on x
-map("n", "c", '"_c', opts)
+-- Windows
+map("n", "<leader>\\", "<cmd>vsplit<CR>", opts)
+map("n", "<leader>-", "<cmd>split<CR>", opts)
+map("n", "<C-w>x", "<cmd>close<CR>", opts)
+map("n", "<C-w>o", "<cmd>only<CR>", opts)
+map("n", "<C-Up>", ":resize -2<CR>", opts)
+map("n", "<C-Down>", ":resize +2<CR>", opts)
+map("n", "<C-Left>", ":vertical resize -2<CR>", opts)
+map("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
--- Prevent pasting over visual selection from overwriting your clipboard
-map("x", "p", '"_dP', opts)
+-- Git
+map("n", "<leader>gd", ":Gitsigns preview_hunk_inline<CR>")
 
--- Neovide paste keymaps
-map("c", "<C-v>", "<C-r>+")
-map("c", "<D-v>", "<C-r>+")
-map("i", "<D-v>", "<C-r>+")
-
--- Enter normal mode in terminal mode
+-- Terminal
 map("t", "<Esc>", [[<C-\><C-n>]])
-
--- Toggle terminal
 map({ "n", "t" }, "<C-/>", function()
   local mode = vim.api.nvim_get_mode().mode
-
   vim.cmd("ToggleTerm")
-
   if mode == "n" then
     vim.cmd("startinsert")
   end
 end)
+
+-- Neovide
+if vim.g.neovide then
+  map({ "n", "v" }, "<C-=>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>", opts)
+  map({ "n", "v" }, "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>", opts)
+  map({ "n", "v" }, "<C-0>", ":lua vim.g.neovide_scale_factor = 1<CR>", opts)
+  map("c", "<C-v>", "<C-r>+")
+  map("c", "<D-v>", "<C-r>+")
+  map("i", "<D-v>", "<C-r>+")
+end

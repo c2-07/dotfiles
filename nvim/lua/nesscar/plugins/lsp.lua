@@ -25,9 +25,10 @@ return {
         end
       end
 
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = "rounded",
-      })
+      -- handled by noice
+      -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      --   border = "rounded",
+      -- })
 
       vim.lsp.config.ts_ls = { on_attach = on_attach, capabilities = capabilities }
       vim.lsp.config.lua_ls = {
