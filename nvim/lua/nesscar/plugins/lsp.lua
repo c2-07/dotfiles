@@ -39,6 +39,8 @@ return {
         },
       }
       vim.lsp.config.clangd = { on_attach = on_attach, capabilities = capabilities }
+      vim.lsp.config.cssls = { on_attach = on_attach, capabilities = capabilities }
+      vim.lsp.config.astro = { on_attach = on_attach, capabilities = capabilities }
       vim.lsp.config.ruff = {
         capabilities = capabilities,
         on_attach = function(client)
@@ -61,6 +63,8 @@ return {
         "lua_ls",
         "clangd",
         "ty",
+        "cssls",
+        "astro",
       })
     end,
   },

@@ -20,6 +20,7 @@ return {
       "json",
       "yaml",
       "toml",
+      "astro",
     },
     auto_install = true,
     highlight = { enable = true },

@@ -16,6 +16,7 @@ return {
         css = true,
         markdown = true,
         lua = true,
+        astro = true,
       }
 
       if allowed[ft] then
@@ -37,6 +38,7 @@ return {
       css = { "prettier" },
       markdown = { "prettier" },
       lua = { "stylua" },
+      astro = { "prettier" },
     },
   },
 }
