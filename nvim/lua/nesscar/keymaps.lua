@@ -14,7 +14,7 @@ map("n", "<Esc>", function()
 end, { silent = true })
 
 map("n", "c", '"_c', opts)
-map("x", "p", '"_dP', opts)
+map("x", "p", "P", opts)
 
 -- File Explorer
 map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })

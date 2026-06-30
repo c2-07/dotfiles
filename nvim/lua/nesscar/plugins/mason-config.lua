@@ -2,15 +2,16 @@ return {
   "williamboman/mason-lspconfig.nvim",
   opts = {
     ensure_installed = {
-      "ts_ls",
-      "html",
       "clangd",
+      "biome",
       "rust_analyzer",
       "ruff",
       "lua_ls",
       "ty",
+      "html",
       "cssls",
       "astro",
+      "vtsls",
     },
   },
 }

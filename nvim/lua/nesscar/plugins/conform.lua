@@ -17,6 +17,7 @@ return {
         markdown = true,
         lua = true,
         astro = true,
+        python = true,
       }
 
       if allowed[ft] then
@@ -28,17 +29,18 @@ return {
     end,
 
     formatters_by_ft = {
-      javascript = { "prettier" },
-      javascriptreact = { "prettier" },
-      typescript = { "prettier" },
-      typescriptreact = { "prettier" },
-      json = { "prettier" },
+      javascript = { "biome" },
+      javascriptreact = { "biome" },
+      typescript = { "biome" },
+      typescriptreact = { "biome" },
+      json = { "biome" },
       yaml = { "prettier" },
       html = { "prettier" },
       css = { "prettier" },
       markdown = { "prettier" },
       lua = { "stylua" },
       astro = { "prettier" },
+      python = { "ruff_format" },
     },
   },
 }

@@ -10,19 +10,8 @@ return {
       end
 
       local on_attach = function(client, bufnr)
-        local has_formatter = false
-
-        for _, c in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
-          if c.name == "null-ls" or c.name == "none-ls" then
-            has_formatter = true
-            break
-          end
-        end
-
-        if has_formatter then
-          client.server_capabilities.documentFormattingProvider = false
-          client.server_capabilities.documentRangeFormattingProvider = false
-        end
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
       end
 
       -- handled by noice
@@ -30,7 +19,7 @@ return {
       --   border = "rounded",
       -- })
 
-      vim.lsp.config.ts_ls = { on_attach = on_attach, capabilities = capabilities }
+      vim.lsp.config.vtsls = { on_attach = on_attach, capabilities = capabilities }
       vim.lsp.config.lua_ls = {
         on_attach = on_attach,
         capabilities = capabilities,
@@ -42,15 +31,8 @@ return {
       vim.lsp.config.cssls = { on_attach = on_attach, capabilities = capabilities }
       vim.lsp.config.astro = { on_attach = on_attach, capabilities = capabilities }
       vim.lsp.config.ruff = {
+        on_attach = on_attach,
         capabilities = capabilities,
-        on_attach = function(client)
-          -- Ruff = formatter only
-          client.server_capabilities.diagnosticProvider = false
-
-          -- keep formatting
-          client.server_capabilities.documentFormattingProvider = true
-          client.server_capabilities.documentRangeFormattingProvider = true
-        end,
       }
       vim.lsp.config.ty = {
         on_attach = on_attach,
@@ -59,7 +41,7 @@ return {
 
       vim.lsp.enable({
         "ruff",
-        "ts_ls",
+        "vtsls",
         "lua_ls",
         "clangd",
         "ty",

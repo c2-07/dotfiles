@@ -13,6 +13,7 @@ return {
     keymap = {
       preset = "none",
 
+      ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
       ["<C-n>"] = { "show", "select_next", "fallback" },
       ["<C-p>"] = { "show", "select_prev", "fallback" },
 
@@ -22,8 +23,8 @@ return {
     completion = {
       trigger = {
         -- Trigger on . < ( {
-        show_on_trigger_character = false,
-        show_on_blocked_trigger_characters = { " ", "\n", "\t" },
+        show_on_trigger_character = true,
+        -- show_on_blocked_trigger_characters = { " ", "\n", "\t" },
       },
       documentation = {
         auto_show = true,
@@ -41,8 +42,8 @@ return {
         draw = {
           columns = {
             { "kind_icon", gap = 1 },
-            { "label",     "label_description", gap = 1 },
-            { "kind",      gap = 1 },
+            { "label", "label_description", gap = 1 },
+            { "kind", gap = 1 },
           },
           components = {
             kind_icon = {
