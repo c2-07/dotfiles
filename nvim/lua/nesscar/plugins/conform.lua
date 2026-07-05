@@ -18,12 +18,15 @@ return {
         lua = true,
         astro = true,
         python = true,
+        c = true,
+        cpp = true,
+        rust = true,
       }
 
       if allowed[ft] then
         return {
           timeout_ms = 500,
-          lsp_format = "never",
+          lsp_format = "fallback",
         }
       end
     end,

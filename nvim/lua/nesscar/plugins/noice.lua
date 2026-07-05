@@ -53,9 +53,12 @@ return {
           view = "mini",
         },
       },
+      cmdline = {
+        view = "cmdline", -- minimal classic bottom command line
+      },
       presets = {
         bottom_search = true,         -- classic bottom cmdline for search
-        command_palette = true,       -- position cmdline + popupmenu together
+        command_palette = false,      -- disable the centered command palette
         long_message_to_split = true, -- long messages in a split
       },
     },

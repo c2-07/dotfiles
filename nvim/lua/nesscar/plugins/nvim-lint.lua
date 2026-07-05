@@ -5,13 +5,7 @@ return {
     local lint = require("lint")
 
     lint.linters_by_ft = {
-      python = { "ruff" },
-      javascript = { "eslint_d" },
-      typescript = { "eslint_d" },
-      javascriptreact = { "eslint_d" },
-      typescriptreact = { "eslint_d" },
-      c = { "clangtidy" },
-      cpp = { "clangtidy" },
+      -- Removed ruff and eslint_d as they are handled by their respective LSPs
       sh = { "shellcheck" },
     }
 

@@ -27,7 +27,11 @@ return {
           Lua = { diagnostics = { globals = { "vim" } } },
         },
       }
-      vim.lsp.config.clangd = { on_attach = on_attach, capabilities = capabilities }
+      vim.lsp.config.clangd = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        cmd = { "clangd", "--clang-tidy" },
+      }
       vim.lsp.config.cssls = { on_attach = on_attach, capabilities = capabilities }
       vim.lsp.config.astro = { on_attach = on_attach, capabilities = capabilities }
       vim.lsp.config.ruff = {
@@ -35,6 +39,10 @@ return {
         capabilities = capabilities,
       }
       vim.lsp.config.ty = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+      }
+      vim.lsp.config.biome = {
         on_attach = on_attach,
         capabilities = capabilities,
       }
@@ -47,6 +55,7 @@ return {
         "ty",
         "cssls",
         "astro",
+        "biome",
       })
     end,
   },
