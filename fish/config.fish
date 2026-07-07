@@ -251,3 +251,7 @@ fish_add_path /Users/gourav/.opencode/bin
 
 # Include macOS default man paths for Nix man
 set -gx MANPATH $MANPATH (/usr/bin/manpath)
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :
