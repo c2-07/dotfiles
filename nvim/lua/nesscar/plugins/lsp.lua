@@ -19,7 +19,28 @@ return {
       --   border = "rounded",
       -- })
 
-      vim.lsp.config.vtsls = { on_attach = on_attach, capabilities = capabilities }
+      local function get_tsdk(root_dir)
+        local local_tsdk = root_dir .. "/node_modules/typescript/lib"
+
+        if vim.uv.fs_stat(local_tsdk .. "/typescript.js") then
+          return local_tsdk
+        end
+
+        return vim.fn.system("npm root -g"):gsub("%s+$", "") .. "/typescript/lib"
+      end
+
+      vim.lsp.config.vtsls = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+
+        before_init = function(_, config)
+          config.init_options = config.init_options or {}
+          config.init_options.typescript = {
+            tsdk = get_tsdk(config.root_dir),
+          }
+        end,
+      }
+
       vim.lsp.config.lua_ls = {
         on_attach = on_attach,
         capabilities = capabilities,
