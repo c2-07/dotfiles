@@ -5,14 +5,9 @@ vim.g.maplocalleader = "\\"
 
 local opt = vim.opt
 
--- netrw settings
-vim.g.netrw_banner = 0
-vim.g.netrw_list_hide = "^\\.\\.=/\\=$,.DS_Store,.idea,.git,__pycache__,venv,node_modules,.*\\.o,.*\\.pyc,.*\\.swp"
-vim.g.netrw_hide = 1
-vim.g.netrw_altv = 1
-vim.g.netrw_liststyle = 4
-vim.g.netrw_winsize = 20
-vim.g.netrw_keepdir = 0
+-- disable netrw completely
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 ---
 -- opt.numberwidth=3
 opt.title = true

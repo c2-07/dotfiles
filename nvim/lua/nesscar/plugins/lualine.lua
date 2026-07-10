@@ -67,6 +67,9 @@ return {
           globalstatus = true,
           component_separators = "",
           section_separators = "",
+          disabled_filetypes = {
+            winbar = { "NvimTree", "lazy", "mason", "TelescopePrompt" },
+          },
         },
 
         sections = {
@@ -166,6 +169,41 @@ return {
               padding = { left = 2, right = 2 },
             },
           },
+        },
+
+        winbar = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {
+            {
+              "filename",
+              path = 1, -- Relative path
+              color = { fg = "#bdae93", bg = "NONE", gui = "bold" },
+              symbols = {
+                modified = " ",
+                readonly = " 󰌾",
+                unnamed = "[No Name]",
+                newfile = "[New]",
+              },
+            },
+          },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {},
+        },
+        inactive_winbar = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {
+            {
+              "filename",
+              path = 1,
+              color = { fg = "#928374", bg = "NONE" },
+            },
+          },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {},
         },
       })
     end
