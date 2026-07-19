@@ -7,6 +7,25 @@ set -gx cargo_target_dir "$home/.cargo-target"
 set -gx editor nvim
 set -gx LOCALSTACK_AUTH_TOKEN "ls-lEWI6575-Zuku-5595-VIfe-raLomaFE7d09"
 
+# Skim (sk)
+set -gx FZF "sk --ansi"
+set -gx SKIM_DEFAULT_COMMAND "fd --type f --hidden --ignore-file ~/.skignore"
+set -gx SKIM_DEFAULT_OPTIONS "--height=45% \
+--layout=reverse \
+--border=rounded \
+--info=inline-right \
+--prompt='❯ ' \
+--pointer='▶' \
+--marker='✓' \
+--scrollbar='' \
+--preview='if [ -d {} ]; then eza --tree --level=2 --color=always {}; else bat --style=numbers --color=always {}; fi' \
+--preview-window='right:55%,border-left' \
+--bind='ctrl-/:toggle-preview' \
+--bind='ctrl-u:preview-half-page-up' \
+--bind='ctrl-d:preview-half-page-down' \
+--color='bg:-1,bg+:#32302f,fg:#ebdbb2,fg+:#fbf1c7,hl:#fabd2f,hl+:#fe8019,pointer:#83a598,marker:#b8bb26,prompt:#8ec07c,header:#928374'"
+
+
 # NEVER call npm here
 set -gx path ~/.npm-global/bin $path
 
@@ -36,6 +55,7 @@ set -gx PATH \
     ~/.npm-global/bin \
     ~/.local/bin \
     /opt/homebrew/bin \
+    ~/.cargo/bin \
     ~/.rustup/toolchains/stable-aarch64-apple-darwin/bin \
     $PATH
 
@@ -94,13 +114,14 @@ function fish_greeting
 end
 
 
-alias neo="open -a neovide"
+alias neo="neovide --fork"
+alias yz=yazi
 alias vi=nvim
 alias reload="source ~/.config/fish/config.fish"
 alias fish_config="nvim ~/.config/fish/config.fish"
 
 if type -q eza
-    alias ls='eza -l --group-directories-first --no-user --no-time'
+    alias ls='eza -l --sort=name --git --group-directories-first --no-user --no-time'
     alias tree='eza --tree'
 else
     alias ls="ls -lah"

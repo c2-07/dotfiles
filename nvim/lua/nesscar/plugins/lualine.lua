@@ -185,6 +185,20 @@ return {
                 unnamed = "[No Name]",
                 newfile = "[New]",
               },
+              fmt = function(str)
+                if vim.bo.buftype == "terminal" then
+                  local title = vim.b.term_title
+                  if title and title ~= "" then
+                    return title
+                  end
+                  local term_cmd = str:match("term://.*//%d+:(.*)")
+                  if term_cmd then
+                    return term_cmd:match("([^/]+)$") or term_cmd
+                  end
+                  return "Terminal"
+                end
+                return str
+              end,
             },
           },
           lualine_x = {},
@@ -199,6 +213,20 @@ return {
               "filename",
               path = 1,
               color = { fg = "#928374", bg = "NONE" },
+              fmt = function(str)
+                if vim.bo.buftype == "terminal" then
+                  local title = vim.b.term_title
+                  if title and title ~= "" then
+                    return title
+                  end
+                  local term_cmd = str:match("term://.*//%d+:(.*)")
+                  if term_cmd then
+                    return term_cmd:match("([^/]+)$") or term_cmd
+                  end
+                  return "Terminal"
+                end
+                return str
+              end,
             },
           },
           lualine_x = {},

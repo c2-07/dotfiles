@@ -1,0 +1,5 @@
+[manager]
+show_hidden = false
+show_symlink = false
+scrolloff = 4
+ratio = [1, 2, 2]

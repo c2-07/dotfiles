@@ -126,4 +126,28 @@
       "ctrl-9": ["workspace::ActivatePane", 8],
     },
   },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-b": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "cmd-r": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-r": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "cmd-b": "workspace::ToggleLeftDock"
+    }
+  }
 ]

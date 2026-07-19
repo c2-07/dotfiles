@@ -5,19 +5,22 @@ live_config_reload = true
 opacity = 0.94
 blur = false
 decorations = "buttonless"
-startup_mode = "maximized"
+# startup_mode = "maximized"
+position = { x = 15, y = 100 }
+dimensions = { columns = 130, lines = 35 }
 dynamic_title = true
 option_as_alt = "both"
 
 [window.padding]
-x = 3
-y = 10
+x = 1
+y = 4
 
 [font]
 size = 16
+normal = { family = "Monaspace Neon NF" }
 
-[font.normal]
-family = "JetBrainsMono Nerd Font"
+# [font.normal]
+# family = "JetBrainsMono Nerd Font"
 
 [cursor]
 style = { shape = "Block", blinking = "Off" }

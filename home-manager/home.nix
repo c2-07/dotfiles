@@ -19,7 +19,6 @@
     eza
     fd
     stow
-    fzf
     gh
     ripgrep
     zoxide

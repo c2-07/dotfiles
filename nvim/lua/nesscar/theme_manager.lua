@@ -23,6 +23,11 @@ local highlights = {
   TelescopeResultsBorder = { bg = "NONE", fg = "#303030" },
   TelescopePreviewNormal = { bg = "NONE" },
   TelescopePreviewBorder = { bg = "NONE", fg = "#303030" },
+
+  NvimTreeNormal = { bg = "NONE" },
+  NvimTreeNormalNC = { bg = "NONE" },
+  NvimTreeEndOfBuffer = { bg = "NONE" },
+  NvimTreeWinSeparator = { bg = "NONE", fg = "#303030" },
 }
 
 function M.apply()

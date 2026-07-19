@@ -1,4 +1,5 @@
-vim.g.theme = "gruvbox" -- active theme: gruvbox | kanagawa | gruvbox-material
+vim.g.theme = "gruvbox" -- active theme: gruvbox | kanagawa | gruvbox-material | fleet | zenbones
+-- vim.g.zenbones_darkness = "stark"
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
@@ -21,12 +22,12 @@ opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with 
 opt.cursorline = false -- Enable highlighting of the current line
 opt.expandtab = true -- Use spaces instead of tabs
 opt.fillchars = {
-	foldopen = "",
-	foldclose = "",
-	fold = " ",
-	foldsep = " ",
-	diff = "╱",
-	eob = " ",
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
 }
 opt.softtabstop = 4
 opt.autoindent = true

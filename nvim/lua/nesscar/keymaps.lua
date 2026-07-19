@@ -20,15 +20,33 @@ map("x", "p", "P", opts)
 map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 
 -- LSP
-map("n", "gd", function() vim.lsp.buf.definition() end, { desc = "Go to Definition" })
-map("n", "gr", function() vim.lsp.buf.references() end, { desc = "References" })
-map("n", "gi", function() vim.lsp.buf.implementation() end, { desc = "Implementation" })
-map("n", "gy", function() vim.lsp.buf.type_definition() end, { desc = "Type Definition" })
-map("n", "K", function() vim.lsp.buf.hover() end, { desc = "Hover Docs" })
-map("n", "gK", function() vim.lsp.buf.signature_help() end, { desc = "Signature Help" })
-map("i", "<C-k>", function() vim.lsp.buf.signature_help() end, { desc = "Signature Help" })
-map("n", "<leader>ca", function() vim.lsp.buf.code_action() end, { desc = "Code Action" })
-map("n", "<leader>ra", function() vim.lsp.buf.rename() end, { desc = "Rename" })
+map("n", "gd", function()
+  vim.lsp.buf.definition()
+end, { desc = "Go to Definition" })
+map("n", "gr", function()
+  vim.lsp.buf.references()
+end, { desc = "References" })
+map("n", "gi", function()
+  vim.lsp.buf.implementation()
+end, { desc = "Implementation" })
+map("n", "gy", function()
+  vim.lsp.buf.type_definition()
+end, { desc = "Type Definition" })
+map("n", "K", function()
+  vim.lsp.buf.hover()
+end, { desc = "Hover Docs" })
+map("n", "gK", function()
+  vim.lsp.buf.signature_help()
+end, { desc = "Signature Help" })
+map("i", "<C-k>", function()
+  vim.lsp.buf.signature_help()
+end, { desc = "Signature Help" })
+map("n", "<leader>ca", function()
+  vim.lsp.buf.code_action()
+end, { desc = "Code Action" })
+map("n", "<leader>ra", function()
+  vim.lsp.buf.rename()
+end, { desc = "Rename" })
 
 -- Diagnostics
 map("n", "<leader>d", function()
@@ -53,16 +71,6 @@ map("n", "bp", ":bprevious<CR>")
 map("n", "bd", "<cmd>bd<CR>")
 map("n", "<leader>x", "<cmd>bd<CR>")
 
--- Tabs
-map("n", "<C-t>", ":tabnew<CR>")
-map("n", "<C-x>", ":tabclose<CR>")
-map("n", "H", ":tabprevious<CR>")
-map("n", "L", ":tabnext<CR>")
-map("n", "<leader>c", "<cmd>tabnew<CR>", opts)
-map("n", "<leader>zz", "<cmd>tab split<CR>", opts)
-map("n", "<leader><C-h>", "<cmd>tabprevious<CR>", opts)
-map("n", "<leader><C-l>", "<cmd>tabnext<CR>", opts)
-
 -- Windows
 map("n", "<leader>\\", "<cmd>vsplit<CR>", opts)
 map("n", "<leader>-", "<cmd>split<CR>", opts)
@@ -76,15 +84,10 @@ map("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 -- Git
 map("n", "<leader>gd", ":Gitsigns preview_hunk_inline<CR>")
 
--- Terminal
-map("t", "<Esc>", [[<C-\><C-n>]])
-map({ "n", "t" }, "<C-/>", function()
-  local mode = vim.api.nvim_get_mode().mode
-  vim.cmd("ToggleTerm")
-  if mode == "n" then
-    vim.cmd("startinsert")
-  end
-end)
+-- Toggle terminal
+map({ "n", "t" }, "<C-_>", "<cmd>ToggleTerm<CR>", {
+  desc = "Toggle Terminal",
+})
 
 -- Neovide
 if vim.g.neovide then
