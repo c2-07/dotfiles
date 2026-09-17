@@ -6,7 +6,7 @@ return {
 
     lint.linters_by_ft = {
       -- Removed ruff and eslint_d as they are handled by their respective LSPs
-      sh = { "shellcheck" },
+      -- sh = { "shellcheck" },
       swift = { "swiftlint" },
     }
 

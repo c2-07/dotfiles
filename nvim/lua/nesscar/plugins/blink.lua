@@ -18,6 +18,8 @@ return {
       ["<C-p>"] = { "show", "select_prev", "fallback" },
 
       ["<CR>"] = { "accept", "fallback" },
+      ["<Tab>"] = { "snippet_forward", "fallback" },
+      ["<S-Tab>"] = { "snippet_backward", "fallback" },
     },
 
     completion = {

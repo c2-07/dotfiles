@@ -1,37 +1,6 @@
 return {
   "stevearc/conform.nvim",
-  event = { "BufWritePre" },
   opts = {
-    format_on_save = function(bufnr)
-      local ft = vim.bo[bufnr].filetype
-
-      local allowed = {
-        javascript = true,
-        javascriptreact = true,
-        typescript = true,
-        typescriptreact = true,
-        json = true,
-        yaml = true,
-        html = true,
-        css = true,
-        markdown = true,
-        lua = true,
-        astro = true,
-        python = true,
-        c = true,
-        cpp = true,
-        rust = true,
-        swift = true,
-      }
-
-      if allowed[ft] then
-        return {
-          timeout_ms = 500,
-          lsp_format = "fallback",
-        }
-      end
-    end,
-
     formatters_by_ft = {
       javascript = { "biome" },
       javascriptreact = { "biome" },
